@@ -1,13 +1,23 @@
 // Hook -> funcion nativa de react
 // useState -> Usar estado
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 
 const Estado = () => {
 
-    const initialState = "Jorge"
+    const initialState = "Morocho"
 
     const [cabello, setCabello] = useState(initialState) 
+
+    useEffect(() => {
+      if(cabello === "Rubio"){
+        console.info("Cabello actualizado")
+      } else {
+        console.warn("Cabello reiniciado")
+      }
+    
+    }, [cabello])
+    
 
   return (
     <>

@@ -1,11 +1,12 @@
-import SeccionTarjetas from "@/components/clase_2/SeccionTarjetas";
-import Estado from "@/components/clase_3/Estado";
+
+
+import RelojEffect from "@/components/clase_4/RelojEffect";
 
 
 export default function Home() {
   return (
    <>
-    <SeccionTarjetas />
+    <RelojEffect/>
    </>
   );
 }
