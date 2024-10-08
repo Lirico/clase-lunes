@@ -1,5 +1,5 @@
 import Tarjeta from "./Tarjeta"
-
+import cadena from "@/context/global"
 
 
 const destinos = [

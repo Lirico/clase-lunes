@@ -1,4 +1,5 @@
-import Boton from "@/components/clase_2/Boton"
+
+import Books from "@/components/clase_5/Books"
 
 
 
@@ -6,7 +7,9 @@ import Boton from "@/components/clase_2/Boton"
 
 const contacto = () => {
   return (
-    <div>hola</div>
+    <>
+      <Books />
+    </>
   )
 }
 

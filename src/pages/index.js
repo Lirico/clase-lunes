@@ -1,12 +1,24 @@
+import Footer from "@/components/clase_5/Footer";
+import Header from "@/components/clase_5/Header";
+import Main from "@/components/clase_5/Main";
+import ThemeContextProvider from "@/context/ThemeContextProvider";
 
 
-import RelojEffect from "@/components/clase_4/RelojEffect";
 
 
 export default function Home() {
   return (
    <>
-    <RelojEffect/>
+      <ThemeContextProvider>
+        <Header />
+        <Main />
+        <Footer />
+      </ThemeContextProvider>
    </>
   );
 }
+
+
+
+
+    
