@@ -1,17 +1,18 @@
-import { useState } from "react"
+import { useReducer } from "react"
+import { TYPES } from "@/actions/actions"
+import { initialState } from "@/reducer/initialState"
+import { reducer } from "@/reducer/reducer"
 
 
 const Contador = () => {
 
-    const initialState = 0
+    const [state, dispatch] = useReducer(reducer, initialState)
 
-    const [contador, setContador] = useState(initialState)
+    const incrementar = () => dispatch({type: TYPES.INCREMENTAR, payload: 1}) 
 
-    const incrementar = () => setContador((contador) => contador + 1)
+    const resetear = () => dispatch({type: TYPES.RESETEAR})
 
-    const resetear = () => setContador(initialState)
-
-    const decrementar = () => setContador((contador) => contador - 1)
+    const decrementar = () => dispatch({type: TYPES.DECREMENTAR, payload: 1})
 
   return (
     <>
@@ -21,7 +22,7 @@ const Contador = () => {
                 <button onClick={resetear}>0</button>
                 <button onClick={incrementar}>+</button>
             </div>
-            <h3>{contador}</h3>
+            <h3>{state.contador}</h3>
         </div>
     </>
   )

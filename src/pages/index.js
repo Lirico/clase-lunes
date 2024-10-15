@@ -1,19 +1,11 @@
-import Footer from "@/components/clase_5/Footer";
-import Header from "@/components/clase_5/Header";
-import Main from "@/components/clase_5/Main";
-import ThemeContextProvider from "@/context/ThemeContextProvider";
 
-
+import ShoppingCart from "@/components/clase_6/ShoppingCart";
 
 
 export default function Home() {
   return (
    <>
-      <ThemeContextProvider>
-        <Header />
-        <Main />
-        <Footer />
-      </ThemeContextProvider>
+    <ShoppingCart />
    </>
   );
 }
