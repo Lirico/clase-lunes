@@ -1,11 +1,13 @@
 
-import ShoppingCart from "@/components/clase_6/ShoppingCart";
+import CrudApp from "@/components/clase_8/CrudApp";
+
+
 
 
 export default function Home() {
   return (
    <>
-    <ShoppingCart />
+    <CrudApp />
    </>
   );
 }

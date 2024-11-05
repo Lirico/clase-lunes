@@ -11,6 +11,7 @@ export const TYPES = {
     MOSTRAR: "MOSTRAR",
     OCULTAR: "OCULTAR",
     // CARRITO
+    READ_STATE: "READ_STATE",
     ADD_TO_CART: "ADD_TO_CART", // Agregar un producto, pero si este ya existe, incrementa la cantidad en 1
     REMOVE_ONE_ITEM: "REMOVE_ONE_ITEM", // Eliminar un item, pero si hay mas de 1, resta la cantidad en 1
     REMOVE_ALL_ITEMS: "REMOVE_ALL_ITEMS", // Eliminar el item independientemente de la cantidad
