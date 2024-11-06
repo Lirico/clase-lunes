@@ -1,61 +1,84 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CrudForm from "./CrudForm";
 import CrudTable from "./CrudTable";
+import axios from "axios";
+import { v4 as uuidv4 } from "uuid";
 
-
-const initialDb = [
-    {
-      id: 1,
-      name: "Seiya",
-      constellation: "Pegaso",
-    },
-    {
-      id: 2,
-      name: "Shiryu",
-      constellation: "Dragon",
-    },
-    {
-      id: 3,
-      name: "Hyoga",
-      constellation: "Cisne",
-    },
-    {
-      id: 4,
-      name: "Shun",
-      constellation: "Andromeda",
-    },
-    {
-        id: 5,
-        name: "Ikki",
-        constellation: "Fenix",
-    }
-]
+const initialDb = [];
 
 // CRUD
 const CrudApp = () => {
+  const [db, setDb] = useState(initialDb);
+  const [dataToEdit, setDataToEdit] = useState(null);
 
-    const [db, setDb] = useState(initialDb)
-    const [dataToEdit, setDataToEdit] = useState(null)
+  // R
+  const readState = async () => {
+    const response = await axios.get("http://localhost:8000/santos");
+    const newDb = await response.data;
+    setDb(newDb);
+  };
 
-    // R
-    const readState = () => {}
+  useEffect(() => {
+    readState();
+  }, []);
 
-    // C
-    const createRecord = () => {}
+  // C
+  const createRecord = async (formData) => {
+    // recibo el caballero -> Le pongo ID
+    formData.id = uuidv4(); // Cuando ejecuto esta funcion -> genero un id
 
-    // U
-    const updateRecord = () => {}
+    await axios.post("http://localhost:8000/santos", JSON.stringify(formData)); // formData -> JS ...¿El servidor entiende JS?
 
-    // D
-    const deleteRecord = () => {}
+    readState();
+  };
+
+  // U
+  const updateRecord = async (formData) => {
+    await axios.put(`http://localhost:8000/santos/${formData.id}`, JSON.stringify(formData))
+
+    readState();
+  };
+
+  // D
+  const deleteRecord = async (caballero) => {
+    const confirmar = confirm(
+      `¿Estás seguro de que queres eliminar a ${caballero.name} de ${caballero.constellation}?`
+    );
+
+    if (confirmar) {
+      await axios.delete(`http://localhost:8000/santos/${caballero.id}`);
+
+      readState();
+    } else {
+      return;
+    }
+  };
 
   return (
     <div>
       <h2>CRUD App</h2>
-      <CrudForm  />
-      <CrudTable data={db} />
+      <CrudForm
+        createRecord={createRecord}
+        updateRecord={updateRecord}
+        dataToEdit={dataToEdit}
+        setDataToEdit={setDataToEdit}
+      />
+      <CrudTable
+        data={db}
+        deleteRecord={deleteRecord}
+        setDataToEdit={setDataToEdit}
+      />
     </div>
   );
 };
 
 export default CrudApp;
+
+// Server a Cliente
+// texto plano -> JSON (formato viajero) -> JS
+
+// Cliente a Servidor
+// JS -> JSON (formato viajero) -> texto plano
+
+// ¿Qué es JSON? -> JavaScript Object Notation -> La forma en la que un documento necesita estructurarse
+// ¿Para qué? Para que cuando llegue a destino, se pueda transformar en JS

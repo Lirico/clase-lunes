@@ -1,6 +1,6 @@
-import {useState} from "react";
+import {useState, useEffect} from "react";
 
-const CrudForm = () => {
+const CrudForm = ({createRecord, updateRecord, dataToEdit, setDataToEdit}) => {
 
     const initialState = {
         name: "",
@@ -10,20 +10,51 @@ const CrudForm = () => {
 
     const [form, setForm] = useState(initialState)
 
-    const handleChangeName = () => {}
+    useEffect(() => {
+      if(dataToEdit){
+        setForm(dataToEdit)
+      } else {
+        setForm(initialState)
+      }
+    }, [dataToEdit]) // null -> caballero
+    
 
-    const handleChangeConstellation = () => {}
+    const handleChange = (event) => {
+      setForm((form) => {
+        return {
+          ...form,
+          [event.target.name]: event.target.value
+        }
+      })
+    }
 
-    const handleSubmit = () => {}
+    const handleSubmit = (event) => {
+      event.preventDefault()
 
-    const handleReset = () => {}
+      if(!form.name || !form.constellation){
+        return alert("Datos incompletos")
+      }
+
+      if(form.id === null){
+        createRecord(form)
+      } else {
+        updateRecord(form)
+      }
+
+      handleReset()
+    }
+
+    const handleReset = () => {
+      setForm(initialState)
+      setDataToEdit(null)
+    }
 
   return (
     <div>
       <h3>Agregar</h3>
       <form onSubmit={handleSubmit}> 
-        <input type="text" name="name" placeholder="Nombre" onChange={handleChangeName} />
-        <input type="text" name="constellation" placeholder="constellation" onChange={handleChangeConstellation} />
+        <input type="text" name="name" placeholder="Nombre" onChange={handleChange} value={form.name}/>
+        <input type="text" name="constellation" placeholder="constellation" onChange={handleChange} value={form.constellation} />
         <input type="submit" value="Enviar" />
         <input type="reset" value="Limpiar" onClick={handleReset} />
       </form>
